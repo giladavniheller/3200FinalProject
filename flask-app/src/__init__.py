@@ -19,7 +19,7 @@ def create_app():
     app.config['MYSQL_DATABASE_PASSWORD'] = open('/secrets/db_password.txt').readline()
     app.config['MYSQL_DATABASE_HOST'] = 'db'
     app.config['MYSQL_DATABASE_PORT'] = 3306
-    app.config['MYSQL_DATABASE_DB'] = 'northwind'  # Change this to your DB name
+    app.config['MYSQL_DATABASE_DB'] = 'MuseMatchLiveDB'  # Change this to your DB name
 
     # Initialize the database object with the settings above. 
     db.init_app(app)
@@ -27,16 +27,24 @@ def create_app():
     # Add a default route
     @app.route("/")
     def welcome():
-        return "<h1>Welcome to the 3200 boilerplate app</h1>"
+        return "<h1>Welcome to MuseMatchLive!</h1>"
 
     # Import the various routes
     from src.views import views
-    from src.customers.customers import customers
-    from src.products.products  import products
+    from src.artists.artists import artists
+    from src.concerts.concerts import concerts
+    from src.managers.managers import managers
+    from src.users.users import users
+    from src.venues.venues import venues
+    from src.genres.genres import genres
 
     # Register the routes that we just imported so they can be properly handled
     app.register_blueprint(views,       url_prefix='/v')
-    app.register_blueprint(customers,   url_prefix='/c')
-    app.register_blueprint(products,    url_prefix='/p')
+    app.register_blueprint(users,   url_prefix='/u')
+    app.register_blueprint(concerts,    url_prefix='/c')
+    app.register_blueprint(artists,    url_prefix='/a')
+    app.register_blueprint(venues,    url_prefix='/v')
+    app.register_blueprint(managers,    url_prefix='/m')
+    app.register_blueprint(genres,    url_prefix='/g')
 
     return app
