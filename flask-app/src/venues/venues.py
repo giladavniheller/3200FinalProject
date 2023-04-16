@@ -39,7 +39,7 @@ def get_venue_concerts(venueId):
 
     # use cursor to query the database for a list of products
     cursor.execute("""
-                    SELECT show_date, HeadlinerName, OpenerName, ticket_price, sold_out, has_happened, link_to_tickets
+                    SELECT show_date as 'Date', HeadlinerName as 'Headliner(s)', OpenerName as 'Opener(s)', ticket_price as 'Price', sold_out as 'Sold Out?', has_happened as 'Show Already Happened?', link_to_tickets as 'Buy Tickets'
                 FROM
                 (SELECT Concerts.concert_id, GROUP_CONCAT(artist_name SEPARATOR ', ') as "HeadlinerName", venue_id, ticket_price, sold_out, show_date, has_happened, link_to_tickets
                                         FROM Concerts
