@@ -30,9 +30,10 @@ def get_past_concerts_attended():
 
     cursor = db.get_db().cursor()
     query = '''
-        SELECT c.concert_id, c.ticket_price, c.sold_out, c.show_date, c.has_happened, c.link_to_tickets, c.venue_id
-        FROM Concerts c
-        INNER JOIN AttendsBridge ab ON c.concert_id = ab.concert_id
+        SELECT DISTINCT *
+        FROM AttendsBridge as ab JOIN Concerts as c on ab.concert_id = c.concert_id
+        JOIN Venues as v on c.venue_id = v.venue_id JOIN PerformsBridge as pb on c.concert_id = pb.concert_id
+        JOIN Artists as a on pb.artist_id = a.artist_id
         WHERE ab.user_id = %s ''' % user_id_use
     
     cursor.execute(query)
@@ -54,9 +55,10 @@ def get_past_concerts_desired():
 
     cursor = db.get_db().cursor()
     query = '''
-        SELECT c.concert_id, c.ticket_price, c.sold_out, c.show_date, c.has_happened, c.link_to_tickets, c.venue_id
-        FROM Concerts c
-        INNER JOIN FavoritesBridge fb ON c.concert_id = fb.concert_id
+        SELECT DISTINCT *
+        FROM FavoritesBridge as fb JOIN Concerts as c on fb.concert_id = c.concert_id
+        JOIN Venues as v on c.venue_id = v.venue_id JOIN PerformsBridge as pb on c.concert_id = pb.concert_id
+        JOIN Artists as a on pb.artist_id = a.artist_id
         WHERE fb.user_id = %s ''' % user_id_use
     
     cursor.execute(query)
@@ -111,7 +113,48 @@ def post_update_favorites():
     return 'Success!'
 
 # delete a concert from the list of concerts that a user wants to attend
+@users.route('/remove_from_favorites', methods=['DELETE'])
+def remove_from_favorites():
+    theData = request.json
+    current_app.logger.info(theData) 
+
+    concert_id_use = theData['concert_id']
+    #lName = theData['concert_id']
+    user_id_use = request.args.get('user_id')
+    #concert_id_use = request.args.get('concert_id')
+        
+    query = 'DELETE FROM FavoritesBridge WHERE user_id = "'
+    query += str(user_id_use) + '" and concert_id =  "'
+    query += str(concert_id_use)
+    current_app.logger.info(query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    return 'Success!'
 
 
-# DELETE FROM FavoritesBridge
-# WHERE user_id = <user_id_value> AND concert_id = <concert_id_value>;
+# delete a concert from the list of concerts that a user is/has attended
+@users.route('/remove_from_attends', methods=['DELETE'])
+def remove_from_attended():
+    theData = request.json
+    current_app.logger.info(theData) 
+
+    concert_id_use = theData['concert_id']
+    #lName = theData['concert_id']
+    user_id_use = request.args.get('user_id')
+    #concert_id_use = request.args.get('concert_id')
+        
+    query = 'DELETE FROM AttendsBridge WHERE user_id = "'
+    query += str(user_id_use) + '" and concert_id =  "'
+    query += str(concert_id_use)
+    current_app.logger.info(query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    return 'Success!'
+
+
