@@ -24,6 +24,4 @@ def get_concerts():
     return the_response
 
 
-# get list of all concerts in specified city
-
 
