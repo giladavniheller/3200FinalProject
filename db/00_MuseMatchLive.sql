@@ -17,7 +17,7 @@ USE MuseMatchLiveDB;
 
 CREATE TABLE IF NOT EXISTS TraditionalUsers
 (
-    user_id             int             primary key,
+    user_id             int             primary key AUTO_INCREMENT,
     first_name          varchar(50)     NOT NULL,
     last_name           varchar(50)     NOT NULL,
     email               varchar(100)    NOT NULL UNIQUE,
@@ -28,13 +28,13 @@ CREATE TABLE IF NOT EXISTS TraditionalUsers
 
 CREATE TABLE IF NOT EXISTS Genres
 (
-    genre_id            int             primary key,
+    genre_id            int             primary key AUTO_INCREMENT,
     genre_name          varchar(50)     NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Artists
 (
-    artist_id           int             primary key,
+    artist_id           int             primary key AUTO_INCREMENT,
     first_name          varchar(50)     NOT NULL,
     last_name           varchar(50)     NOT NULL,
     artist_name         varchar(100)    NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS Artists
 
 CREATE TABLE IF NOT EXISTS Venues
 (
-    venue_id            int             primary key,
+    venue_id            int             primary key AUTO_INCREMENT,
     venue_name          varchar(100)    NOT NULL UNIQUE,
     venue_hours         varchar(200),
     capacity            int             NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS Venues
 
 CREATE TABLE IF NOT EXISTS VenueManagers
 (
-    venue_manager_id    int             primary key,
+    venue_manager_id    int             primary key AUTO_INCREMENT,
     first_name          varchar(50)     NOT NULL,
     last_name           varchar(50)     NOT NULL,
     email               varchar(100)    NOT NULL UNIQUE,
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS VenueManagers
 
 CREATE TABLE IF NOT EXISTS Concerts
 (
-    concert_id          int             primary key,
+    concert_id          int             primary key AUTO_INCREMENT,
     ticket_price        double          NOT NULL,
     sold_out            bool            NOT NULL DEFAULT FALSE,
     show_date           date            NOT NULL,
