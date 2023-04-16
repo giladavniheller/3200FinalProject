@@ -106,7 +106,7 @@ def post_update_favorites():
 
 # delete a concert from the list of concerts that a user wants to attend
 
-DELETE FROM FavoritesBridge
-WHERE user_id = <user_id_value> AND concert_id = <concert_id_value>;
+# DELETE FROM FavoritesBridge
+# WHERE user_id = <user_id_value> AND concert_id = <concert_id_value>;
 
 

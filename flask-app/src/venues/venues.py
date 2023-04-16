@@ -42,7 +42,7 @@ def get_venue_concerts():
 
     # use cursor to query the database for a list of products
     cursor.execute("""
-                    SELECT show_date as 'Date', HeadlinerName as 'Headliner(s)', OpenerName as 'Opener(s)', ticket_price as 'Price', sold_out as 'Sold Out?', has_happened as 'Show Already Happened?', link_to_tickets as 'Buy Tickets'
+                    SELECT show_date as 'Date', HeadlinerName as 'Headliner(s)', OpenerName as 'Opener(s)', ticket_price as 'Price', sold_out as 'Sold Out?', has_happened as 'Show Already Happened?', link_to_tickets as 'Buy Tickets', headliners.concert_id as 'ID'
                 FROM
                 (SELECT Concerts.concert_id, GROUP_CONCAT(artist_name SEPARATOR ', ') as "HeadlinerName", venue_id, ticket_price, sold_out, show_date, has_happened, link_to_tickets
                                         FROM Concerts
@@ -77,6 +77,40 @@ def get_venue_concerts():
         json_data.append(dict(zip(column_headers, row)))
 
     return jsonify(json_data)
+
+
+# # Get all the venues from the database
+@venues.route('/toggleSoldOut/', methods=['PUT'])
+def toggle_sold_out():
+
+
+    venue_id_use = request.args.get('venue_id')
+    concert_id_use = request.args.get('concert_id')
+
+    # get a cursor object from the database
+    cursor = db.get_db().cursor()
+
+    # use cursor to query the database for a list of products
+    cursor.execute('UPDATE Concerts SET sold_out = NOT sold_out WHERE concert_id = %s;' % concert_id_use)
+
+    # grab the column headers from the returned data
+    column_headers = [x[0] for x in cursor.description]
+
+    # create an empty dictionary object to use in 
+    # putting column headers together with data
+    json_data = []
+
+    # fetch all the data from the cursor
+    theData = cursor.fetchall()
+
+    # for each of the rows, zip the data elements together with
+    # the column headers. 
+    for row in theData:
+        json_data.append(dict(zip(column_headers, row)))
+
+    return jsonify(json_data)
+
+    return 'Success', 200
 
 # # get the top 5 products from the database
 # @products.route('/mostExpensive')
