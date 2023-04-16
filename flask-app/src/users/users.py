@@ -46,13 +46,16 @@ def get_past_concerts_attended():
 #TODO need to do this for a specific user not all users
 @users.route('/desired_concerts', methods=['GET'])
 def get_past_concerts_desired():
+
+    user_id_use = request.args.get('user_id')
+
     cursor = db.get_db().cursor()
     query = '''
         SELECT c.concert_id, c.ticket_price, c.sold_out, c.show_date, c.has_happened, c.link_to_tickets, c.venue_id
         FROM Concerts c
         INNER JOIN FavoritesBridge fb ON c.concert_id = fb.concert_id
-        WHERE fb.user_id = <user_id>;
-    '''
+        WHERE fb.user_id = %s ''' % user_id_use
+    
     cursor.execute(query)
     column_headers = [x[0] for x in cursor.description]
     json_data = []

@@ -32,8 +32,11 @@ def get_venues():
     return jsonify(json_data)
 
 # # Get all the venues from the database
-@venues.route('/venueHome/<venueId>', methods=['GET'])
-def get_venue_concerts(venueId):
+@venues.route('/venueHome/', methods=['GET'])
+def get_venue_concerts():
+
+
+    venue_id_use = request.args.get('venue_id')
 # get a cursor object from the database
     cursor = db.get_db().cursor()
 
@@ -56,7 +59,7 @@ def get_venue_concerts(venueId):
                                         GROUP BY concert_id) as openers
                 ON headliners.concert_id = openers.concert_id
                 WHERE headliners.venue_id = %s
-    """ % venueId)
+    """ % venue_id_use)
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
