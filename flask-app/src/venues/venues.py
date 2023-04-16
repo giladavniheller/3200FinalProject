@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
@@ -77,6 +77,11 @@ def get_venue_concerts():
         json_data.append(dict(zip(column_headers, row)))
 
     return jsonify(json_data)
+@venues.route('addConcert', methods = ['POST'])
+def add_concert():
+    data = request.json
+    current_app.logger.info(data)
+    return 'Success!\n'
 
 
 # # Get all the venues from the database

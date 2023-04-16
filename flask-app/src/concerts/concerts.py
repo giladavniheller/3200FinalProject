@@ -10,8 +10,9 @@ concerts = Blueprint('concerts', __name__)
 @concerts.route('/concerts', methods=['GET'])
 def get_concerts():
     cursor = db.get_db().cursor()
-    cursor.execute('select company, last_name,\
-        first_name, job_title, business_phone from concerts')
+    cursor.execute('''select * from Concerts c JOIN Venues as v on c.venue_id = v.venue_id
+                   JOIN PerformsBridge as pb on pb.concert_id = c.concert_id
+                   JOIN Artists as a on a.artist_id = pb.artist_id''')
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
