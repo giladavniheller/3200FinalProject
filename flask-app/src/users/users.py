@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
@@ -21,16 +21,20 @@ def get_users():
     the_response.mimetype = 'application/json'
     return the_response
 
+
 # get list of past concerts a user has attended
-#TODO need to do this for a specific user not all users
 @users.route('/attended_concerts', methods=['GET'])
 def get_past_concerts_attended():
+
+    user_id_use = request.args.get('user_id')
+
     cursor = db.get_db().cursor()
     query = '''
-        SELECT TU.user_id, C.concert_id
-        FROM AttendsBridge JOIN Concerts C JOIN TraditionalUsers TU on AttendsBridge.user_id = TU.user_id
-        WHERE has_happened IS TRUE
-    '''
+        SELECT c.concert_id, c.ticket_price, c.sold_out, c.show_date, c.has_happened, c.link_to_tickets, c.venue_id
+        FROM Concerts c
+        INNER JOIN AttendsBridge ab ON c.concert_id = ab.concert_id
+        WHERE ab.user_id = %s ''' % user_id_use
+    
     cursor.execute(query)
     column_headers = [x[0] for x in cursor.description]
     json_data = []
@@ -43,7 +47,6 @@ def get_past_concerts_attended():
     return the_response
 
 # get a list of concerts a user wants to attend
-#TODO need to do this for a specific user not all users
 @users.route('/desired_concerts', methods=['GET'])
 def get_past_concerts_desired():
 
@@ -66,6 +69,7 @@ def get_past_concerts_desired():
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
 
 # update a user's profile information
 @users.route('/update_profile', methods=['PUT'])
@@ -90,12 +94,14 @@ def post_update_favorites():
     theData = request.json
     current_app.logger.info(theData) 
 
-    user_id = theData['user_id']
-    lName = theData['concert_id']
+    concert_id_use = theData['concert_id']
+    #lName = theData['concert_id']
+    user_id_use = request.args.get('user_id')
+    #concert_id_use = request.args.get('concert_id')
         
     query = 'INSERT INTO FavoritesBridge (user_id, concert_id) VALUES ("'
-    query += user_id + '", "'
-    query += concert_id + ')'
+    query += str(user_id_use) + '", "'
+    query += str(concert_id_use) + ')'
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
@@ -106,7 +112,7 @@ def post_update_favorites():
 
 # delete a concert from the list of concerts that a user wants to attend
 
-DELETE FROM FavoritesBridge
-WHERE user_id = <user_id_value> AND concert_id = <concert_id_value>;
+# DELETE FROM FavoritesBridge
+# WHERE user_id = <user_id_value> AND concert_id = <concert_id_value>;
 
 
