@@ -32,11 +32,8 @@ def create_app():
     # Import the various routes
     from src.views import views
     from src.artists.artists import artists
-    from src.concerts.concerts import concerts
-    from src.managers.managers import managers
     from src.users.users import users
     from src.venues.venues import venues
-    from src.genres.genres import genres
 
     # Register the routes that we just imported so they can be properly handled
     app.register_blueprint(views,       url_prefix='/v')
