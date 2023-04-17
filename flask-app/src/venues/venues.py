@@ -78,12 +78,7 @@ def get_venue_concerts():
 
     return jsonify(json_data)
 
-# # add a concert to a venue
-@venues.route('addConcert', methods = ['POST']) # TODO finish this
-def add_concert():
-    data = request.json
-    current_app.logger.info(data)
-    return 'Success!\n'
+
 
 
 # # toggle the sell state of the concert
