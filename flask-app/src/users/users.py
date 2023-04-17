@@ -131,6 +131,32 @@ def post_update_favorites():
 
     return 'Success!'
 
+
+
+# add a concert to the list of concerts that a user wants to attend
+@users.route('/update_attends', methods=['POST'])
+def post_update_attends():
+    theData = request.json
+    current_app.logger.info(theData) 
+
+    concert_id_use = theData['concert_id']
+    #lName = theData['concert_id']
+    user_id_use = request.args.get('user_id')
+    #concert_id_use = request.args.get('concert_id')
+        
+    query = 'INSERT INTO AttendsBridge (user_id, concert_id) VALUES ("'
+    query += str(user_id_use) + '", "'
+    query += str(concert_id_use) + '")'
+    current_app.logger.info(query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    return 'Success!'
+
+
+
 # delete a concert from the list of concerts that a user wants to attend
 @users.route('/remove_from_favorites', methods=['DELETE'])
 def remove_from_favorites():
