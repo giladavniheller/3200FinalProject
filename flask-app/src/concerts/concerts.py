@@ -32,11 +32,11 @@ def delete_concert():
 
     concert_id_use = theData['concert_id']
     #lName = theData['concert_id']
-    #user_id_use = request.args.get('user_id')
+    user_id_use = request.args.get('user_id')
     #concert_id_use = request.args.get('concert_id')
         
-    query = 'DELETE FROM Concerts WHERE concert_id = '
-    query += str(concert_id_use)
+    query = 'DELETE FROM Concerts WHERE concert_id = "'
+    query += str(concert_id_use) + '"'
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()

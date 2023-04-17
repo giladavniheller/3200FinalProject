@@ -122,7 +122,7 @@ def post_update_favorites():
         
     query = 'INSERT INTO FavoritesBridge (user_id, concert_id) VALUES ("'
     query += str(user_id_use) + '", "'
-    query += str(concert_id_use) + ')'
+    query += str(concert_id_use) + '")'
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
@@ -144,7 +144,7 @@ def remove_from_favorites():
         
     query = 'DELETE FROM FavoritesBridge WHERE user_id = "'
     query += str(user_id_use) + '" and concert_id =  "'
-    query += str(concert_id_use)
+    query += str(concert_id_use) + '"'
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
@@ -167,7 +167,7 @@ def remove_from_attended():
         
     query = 'DELETE FROM AttendsBridge WHERE user_id = "'
     query += str(user_id_use) + '" and concert_id =  "'
-    query += str(concert_id_use)
+    query += str(concert_id_use) + '"'
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
