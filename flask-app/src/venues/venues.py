@@ -132,9 +132,16 @@ def create_new_concert():
     cursor.execute(query)
     db.get_db().commit()
 
-
     concert_id = cursor.lastrowid
 
+    headliners_assigned = assign_headliners(headliners=headliners, concert_id=concert_id)
+    openers_assigned = assign_openers(openers=openers, concert_id=concert_id)
+
+    return 'Success!' if headliners_assigned == "Success!" and openers_assigned == "Success!" else "Uh oh!"
+
+
+@venues.route('/assignHeadliners/', methods=['POST'])
+def assign_headliners(headliners, concert_id):
 
     for artist_id in headliners:
 
@@ -147,6 +154,11 @@ def create_new_concert():
         cursor = db.get_db().cursor()
         cursor.execute(query)
         db.get_db().commit()
+
+    return 'Success!'
+
+@venues.route('/assignOpeners/', methods=['POST'])
+def assign_openers(openers, concert_id):
 
     for artist_id in openers:
 
