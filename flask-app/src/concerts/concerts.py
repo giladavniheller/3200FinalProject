@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
@@ -23,5 +23,26 @@ def get_concerts():
     the_response.mimetype = 'application/json'
     return the_response
 
+
+# delete a concert listing
+@concerts.route('/delete_concert', methods=['DELETE'])
+def delete_concert():
+    theData = request.json
+    current_app.logger.info(theData) 
+
+    concert_id_use = theData['concert_id']
+    #lName = theData['concert_id']
+    user_id_use = request.args.get('user_id')
+    #concert_id_use = request.args.get('concert_id')
+        
+    query = 'DELETE FROM Concerts WHERE concert_id = "'
+    query += str(concert_id_use)
+    current_app.logger.info(query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    return 'Success!'
 
 

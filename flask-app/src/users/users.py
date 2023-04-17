@@ -76,18 +76,37 @@ def get_past_concerts_desired():
 # update a user's profile information
 @users.route('/update_profile', methods=['PUT'])
 def put_update_profile():
+
+    user_id_use = request.args.get('user_id')
+
     theData = request.json
     current_app.logger.info(theData) 
 
-    fName = theData['first_name']
-    lName = theData['last_name']
-    email = theData['email']
+    fName = theData['FirstName_input']
+    lName = theData['LastName_input']
+    email = theData['Email_input']
+    city = theData['City_input']
+    state = theData['State_input']
+    zip = theData['Zip_input']
 
-    query = '''
-        UPDATE TraditionalUsers
-        SET email = '<new_email>', first_name = '<new_first_name>', last_name = '<new_last_name>'
-        WHERE user_id = <user_id>;
-    '''
+    query = 'UPDATE TraditionalUsers SET email = '
+    
+    query += '"' + email + '"' + ', first_name = "'
+    query += fName + '", last_name = "'
+    query += lName + '", city = "'
+    query += city + '", state = "'
+    query += state + '", zip = "'
+    query += str(zip) + '" WHERE user_id = '
+    query += str(user_id_use)
+
+    current_app.logger.info(query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    return 'Success!'
+
 
 
 # add a concert to the list of concerts that a user wants to attend
