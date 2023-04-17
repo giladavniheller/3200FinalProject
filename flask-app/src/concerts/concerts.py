@@ -36,7 +36,7 @@ def delete_concert():
     #concert_id_use = request.args.get('concert_id')
         
     query = 'DELETE FROM Concerts WHERE concert_id = "'
-    query += str(concert_id_use)
+    query += str(concert_id_use) + '"'
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
