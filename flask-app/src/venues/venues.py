@@ -105,3 +105,64 @@ def toggle_sold_out():
 
 
     return 'Success', 200
+
+
+# add a new concert to Concerts
+@venues.route('/createConcert/', methods=['POST'])
+def create_new_concert():
+    theData = request.json
+    current_app.logger.info(theData) 
+
+    venue_id = request.args.get('venue_id')
+
+    ticket_price = theData['TicketPrice']
+    ticket_link = theData['LinkToBuyTickets']
+    show_date = theData['ShowDate']
+    sold_out = theData['SoldOut']
+
+
+    headliners = theData['HeadlinerSelect']
+    openers = theData['OpenerSelect']
+    #concert_id_use = request.args.get('concert_id')
+
+    query = f'INSERT INTO Concerts (ticket_price, sold_out, show_date, link_to_tickets, venue_id) VALUES ('
+    query += str(ticket_price) + ', '
+    query += str(sold_out) + ', "'
+    query += str(show_date[:10]) + '", '
+    query += ('"' + str(ticket_link) + '", ') if ticket_link != "" else 'NULL, '
+    query += str(venue_id) + ')'
+    current_app.logger.info(query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+
+    concert_id = cursor.lastrowid
+
+
+    for artist_id in headliners:
+
+        query = 'INSERT INTO PerformsBridge (artist_id, concert_id, is_headliner) VALUES ('
+        query += str(artist_id) + ', '
+        query += str(concert_id) + ', '
+        query += '1)'
+        current_app.logger.info(query)
+
+        cursor = db.get_db().cursor()
+        cursor.execute(query)
+        db.get_db().commit()
+
+    for artist_id in openers:
+
+        query = 'INSERT INTO PerformsBridge (artist_id, concert_id, is_headliner) VALUES ('
+        query += str(artist_id) + ', '
+        query += str(concert_id) + ', '
+        query += '0)'
+        current_app.logger.info(query)
+
+        cursor = db.get_db().cursor()
+        cursor.execute(query)
+        db.get_db().commit()
+
+    return 'Success!'
