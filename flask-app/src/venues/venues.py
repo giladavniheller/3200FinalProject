@@ -31,7 +31,7 @@ def get_venues():
 
     return jsonify(json_data)
 
-# # Get all the venues from the database
+# # Get all the concerts from a specific venue from the database
 @venues.route('/venueHome', methods=['GET'])
 def get_venue_concerts():
 
@@ -77,14 +77,16 @@ def get_venue_concerts():
         json_data.append(dict(zip(column_headers, row)))
 
     return jsonify(json_data)
-@venues.route('addConcert', methods = ['POST'])
+
+# # add a concert to a venue
+@venues.route('addConcert', methods = ['POST']) # TODO finish this
 def add_concert():
     data = request.json
     current_app.logger.info(data)
     return 'Success!\n'
 
 
-# # Get all the venues from the database
+# # toggle the sell state of the concert
 @venues.route('/toggleSoldOut', methods=['PUT'])
 def toggle_sold_out():
 
@@ -94,7 +96,7 @@ def toggle_sold_out():
     concert_id_use = theData['selected_concert_id']
 
     query = 'UPDATE Concerts SET sold_out = NOT sold_out WHERE concert_id = "'
-    query += str(concert_id_use)
+    query += str(concert_id_use) + '"'
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
