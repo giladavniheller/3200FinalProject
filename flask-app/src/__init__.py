@@ -30,13 +30,11 @@ def create_app():
         return "<h1>Welcome to MuseMatchLive!</h1>"
 
     # Import the various routes
-    from src.views import views
     from src.artists.artists import artists
     from src.users.users import users
     from src.venues.venues import venues
 
     # Register the routes that we just imported so they can be properly handled
-    app.register_blueprint(views,       url_prefix='/v')
     app.register_blueprint(users,   url_prefix='/u')
     app.register_blueprint(artists,    url_prefix='/a')
     app.register_blueprint(venues,    url_prefix='/v')
