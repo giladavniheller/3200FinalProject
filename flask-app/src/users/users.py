@@ -22,7 +22,7 @@ def get_users():
     return the_response
 
 
-# get list of past concerts a user has attended
+# get list of concerts a user has attended or will attend
 @users.route('/attended_concerts', methods=['GET'])
 def get_past_concerts_attended():
 
@@ -47,7 +47,7 @@ def get_past_concerts_attended():
     the_response.mimetype = 'application/json'
     return the_response
 
-# get a list of concerts a user wants to attend
+# get a list of concerts a user wants to attend (desired concerts)
 @users.route('/desired_concerts', methods=['GET'])
 def get_past_concerts_desired():
 
@@ -133,7 +133,7 @@ def post_update_favorites():
 
 
 
-# add a concert to the list of concerts that a user wants to attend
+# add a concert to the list of concerts that a user has attended or will be attending
 @users.route('/update_attends', methods=['POST'])
 def post_update_attends():
     theData = request.json
@@ -180,7 +180,7 @@ def remove_from_favorites():
     return 'Success!'
 
 
-# delete a concert from the list of concerts that a user is/has attended
+# delete a concert from the list of concerts that a user is attending/has attended
 @users.route('/remove_from_attends', methods=['DELETE'])
 def remove_from_attended():
     theData = request.json

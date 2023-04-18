@@ -215,7 +215,7 @@ def delete_concert():
 
 
 
-# update a user's profile information
+# update a venue's profile information
 @venues.route('/update_profile', methods=['PUT'])
 def put_update_profile():
 
