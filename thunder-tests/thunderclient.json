@@ -576,5 +576,95 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "dd4a3c3c-c461-4bd7-aa7e-e86d4a0a96ec",
+    "colId": "5c0a05c9-8a9e-41f8-b24b-8e3dce98805a",
+    "containerId": "",
+    "name": "get_venue_info1",
+    "url": "localhost:8001/v/venues/info?venue_id=3",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2023-04-18T16:54:32.974Z",
+    "modified": "2023-04-18T16:56:06.316Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "venue_id",
+        "value": "3",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "3255613e-5462-4819-a97f-75f67f85e3b7",
+    "colId": "5c0a05c9-8a9e-41f8-b24b-8e3dce98805a",
+    "containerId": "",
+    "name": "get_venue_info2",
+    "url": "localhost:8001/v/venues/info?venue_id=1",
+    "method": "GET",
+    "sortNum": 90000,
+    "created": "2023-04-18T16:55:58.494Z",
+    "modified": "2023-04-18T16:55:58.494Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "venue_id",
+        "value": "1",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "55921efd-27e7-4598-840e-9240b973461e",
+    "colId": "5c0a05c9-8a9e-41f8-b24b-8e3dce98805a",
+    "containerId": "",
+    "name": "update_venue_profile1",
+    "url": "localhost:8001/v/update_profile?venue_id=47",
+    "method": "PUT",
+    "sortNum": 100000,
+    "created": "2023-04-18T16:56:18.168Z",
+    "modified": "2023-04-18T17:00:43.144Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "venue_id",
+        "value": "47",
+        "isPath": false
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"VenueName_input\" : \"GigSpot\",\n  \"VenueHours_input\" : \"3:52 AM\",\n  \"Capacity_input\" : 12001,\n  \"City_input\" : \"Kansas City\",\n  \"State_input\": \"Missouri\",\n  \"Zip_input\": \"12345\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "4c68f71e-9ff3-47ce-824c-3d9ce36e2136",
+    "colId": "5c0a05c9-8a9e-41f8-b24b-8e3dce98805a",
+    "containerId": "",
+    "name": "update_venue_profile2",
+    "url": "localhost:8001/v/update_profile?venue_id=46",
+    "method": "PUT",
+    "sortNum": 110000,
+    "created": "2023-04-18T17:01:48.065Z",
+    "modified": "2023-04-18T17:02:43.976Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "venue_id",
+        "value": "46",
+        "isPath": false
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"VenueName_input\" : \"The Random Chimp\",\n  \"VenueHours_input\" : \"3:54 AM\",\n  \"Capacity_input\" : 12,\n  \"City_input\" : \"Dallas\",\n  \"State_input\": \"Texas\",\n  \"Zip_input\": \"54321\"\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]

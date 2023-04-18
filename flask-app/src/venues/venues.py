@@ -212,3 +212,61 @@ def delete_concert():
     db.get_db().commit()
 
     return 'Success!'
+
+
+
+# update a user's profile information
+@venues.route('/update_profile', methods=['PUT'])
+def put_update_profile():
+
+    venue_id_use = request.args.get('venue_id')
+
+    theData = request.json
+    current_app.logger.info(theData) 
+
+    vName = theData['VenueName_input']
+    vHours = theData['VenueHours_input']
+    cap = theData['Capacity_input']
+    city = theData['City_input']
+    state = theData['State_input']
+    zip = theData['Zip_input']
+
+    query = 'UPDATE Venues SET venue_name = '
+    
+    query += '"' + vName + '"' + ', venue_hours = "'
+    query += vHours + '", capacity = "'
+    query += str(cap) + '", city = "'
+    query += city + '", state = "'
+    query += state + '", zip = "'
+    query += str(zip) + '" WHERE venue_id = '
+    query += str(venue_id_use)
+
+    current_app.logger.info(query)
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+
+    return 'Success!'
+
+
+# get info for specific venue
+@venues.route('/venues/info', methods=['GET'])
+def get_venue_info():
+
+    venue_id_use = request.args.get('venue_id')
+
+    cursor = db.get_db().cursor()
+    cursor.execute('''select venue_id, venue_name,\
+        venue_hours, capacity, city, state, zip from Venues WHERE venue_id = %s ''' % venue_id_use)
+    
+
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
