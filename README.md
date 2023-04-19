@@ -25,3 +25,5 @@ This user persona is for the owner of a music venue. Venues will be able to see 
 7. Start the containers with `docker compose up`. To run in detached mode, run `docker compose up -d`.
 
 ## Link to the video pitch:
+
+https://drive.google.com/file/d/1Sc4g2IBG34cLRCQ0TeZ76ePHScupmhQQ/view?usp=sharing
