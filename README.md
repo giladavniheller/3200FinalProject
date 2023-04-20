@@ -26,4 +26,4 @@ This user persona is for the owner of a music venue. Venues will be able to see 
 
 ## Link to the video pitch:
 
-https://drive.google.com/file/d/1Sc4g2IBG34cLRCQ0TeZ76ePHScupmhQQ/view?usp=sharing
+https://drive.google.com/file/d/1igdiwFXHJdQgkByC0DCkrcysEWU_V36b/view?usp=sharing
